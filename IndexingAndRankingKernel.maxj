@@ -1,0 +1,28 @@
+
+package indexingAndRanking;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+
+class IndexingAndRankingKernel extends Kernel {
+
+	IndexingAndRankingKernel(KernelParameters parameters) {
+		super(parameters);
+
+		// Counter to offset
+		DFEVar cnt = control.count.simpleCounter(65536);
+		
+		// Input
+		DFEVar inStream = io.input("inStream", dfeFloat(8, 24));
+
+		DFEVar result;
+		
+		DFEVar resultPosition = stream.offset(result, inStream);
+		resultPosition = cnt;
+
+		// Output
+		io.output("outStream", result, dfeFloat(8, 24));
+	}
+
+}
